@@ -32,6 +32,8 @@ int ftree_init(char *fdir) {
     }
 
     int l;
+    char *lline;
+    int final_lnum;
     for(l=0; l < sizeof(FDATA.c_files); l++) {
         if(FDATA.c_files[l] == NULL) {
             break;
@@ -40,13 +42,17 @@ int ftree_init(char *fdir) {
         snprintf(buf, sizeof(buf), "%s/%s", FDATA.fdir, FDATA.c_files[l]);
         FILE *main_c_file = fopen(buf, "r");
         char line[256];
+        int lnum = 0;
         while(fgets(line, sizeof(line), main_c_file) != NULL) {
+            lnum++;
             char *int_m = "int main(";
             char* find = strstr(line, int_m);
             if(find != NULL) {
                 FDATA.main_file = (char *)malloc(sizeof(char *)+100);
                 strcpy(FDATA.main_file, FDATA.c_files[l]);
-                printf("Main function: %s\n   | %s", FDATA.main_file, line);
+                lline = (char *)malloc(sizeof(char *)+100);
+                strcpy(lline, line);
+                final_lnum = lnum;
                 break;
             } else {
                 continue;
@@ -55,5 +61,14 @@ int ftree_init(char *fdir) {
         fclose(main_c_file);
     }
 
+    printf("Main function: %s\n %d| %s",
+           FDATA.main_file,
+           final_lnum,
+           lline);
+
     return 0;
+}
+
+void ftree_run() {
+
 }

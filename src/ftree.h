@@ -16,9 +16,11 @@ struct f_data {
     char *files[256];
     char *c_files[256];
     char *main_file;
+    int main_line_num;
 
 };
 
 int ftree_init(char *fdir);
+void ftree_run();
 
 #endif

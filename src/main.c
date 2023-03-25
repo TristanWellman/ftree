@@ -19,6 +19,8 @@ int main(int argc, char *argv[]) {
     if(i != 0) {
         printf("ERROR:: Could not init Ftree\n");
         return 1;
+    } else {
+        ftree_run();
     }
 
     return 0;
