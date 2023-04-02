@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "ftree.h"
 
-#define DEFAULT_DIR "."
+#define DEFAULT_DIR "./"
 
 int main(int argc, char *argv[]) {
 
@@ -22,6 +23,12 @@ int main(int argc, char *argv[]) {
     } else {
         ftree_run();
     }
+
+#if defined _WIN32 | defined _WIN64 | defined __WIN32__
+    system("generate.exe;");
+#else
+    system("mono generate.exe;");
+#endif
 
     return 0;
 

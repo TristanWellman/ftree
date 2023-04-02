@@ -61,14 +61,50 @@ int ftree_init(char *fdir) {
         fclose(main_c_file);
     }
 
+    char buf[0x100];
+    snprintf(buf, sizeof(buf), "%s/%s", FDATA.fdir, FDATA.main_file);
+    FDATA.main_file = buf;
+    FDATA.line = lline;
     printf("Main function: %s\n %d| %s",
            FDATA.main_file,
            final_lnum,
-           lline);
+           FDATA.line);
 
     return 0;
 }
 
-void ftree_run() {
+struct n_func next_function(struct n_func last_func) {
+    struct n_func R_FUNC;
+    FILE *last_file = fopen(last_func.file_name, "r");
+    char line[256];
+    int is_in_func = 0;
+    while(fgets(line, sizeof(line), last_file) != NULL) {
+        char *find_line = strstr(line, last_func.func_line);
+        if(is_in_func == 1) {
+            /*to be parsed*/
+        }
+        if(find_line != NULL) {
+            is_in_func = 1;
+        } else {
+            continue;
+        }
+    }
+    fclose(last_file);
+    return R_FUNC;
+}
 
+void ftree_run() {
+    struct n_func LFUNC;
+    struct n_func NFUNC;
+
+    LFUNC.file_name = FDATA.main_file;
+    LFUNC.func_name = "main";
+    LFUNC.func_line = FDATA.line;
+
+    int i;
+    for(i=0;i < MAX_FUNCS_INPROJ;i++) {
+        NFUNC = next_function(LFUNC);
+        LFUNC = NFUNC;
+        break; /* <-- temporary */
+    }
 }

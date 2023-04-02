@@ -7,6 +7,16 @@
 #include <dirent.h>
 #endif
 
+#define MAX_FUNCS_INPROJ 2147483647
+
+struct n_func {
+
+    char *file_name;
+    char *func_name;
+    char *func_line;
+
+};
+
 struct f_data {
 
     DIR *dir;
@@ -16,6 +26,7 @@ struct f_data {
     char *files[256];
     char *c_files[256];
     char *main_file;
+    char *line;
     int main_line_num;
 
 };
